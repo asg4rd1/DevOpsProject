@@ -1,0 +1,12 @@
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+crash.log
+
+# Variables sensibles
+*.tfvars
+*.tfvars.json
+
+# Plan files
+*.out
