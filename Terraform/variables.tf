@@ -10,3 +10,8 @@ variable "instance_type" {
 variable "allowed_ip" {
   type    = string
 }
+
+variable "ports" {
+  type = list(number)
+  default = [22, 80, 443]
+}

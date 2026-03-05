@@ -8,21 +8,12 @@ resource "aws_security_group" "dev_app_sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "ssh_rule"{
-
+resource "aws_vpc_security_group_ingress_rule" "ingress"{
+  for_each = toset(var.ports)
   security_group_id = aws_security_group.dev_app_sg.id
     cidr_ipv4 = var.allowed_ip
-  from_port   = 22
-  to_port     = 22
-  ip_protocol = "tcp"
-}
-
-resource "aws_vpc_security_group_ingress_rule" "http_rule"{
-
-  security_group_id = aws_security_group.dev_app_sg.id
-    cidr_ipv4 = var.allowed_ip
-  from_port   = 80
-  to_port     = 80
+  from_port   = each.value
+  to_port     = each.value
   ip_protocol = "tcp"
 }
 
