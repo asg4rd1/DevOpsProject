@@ -17,10 +17,8 @@ variable "allowed_ip" {
 
 variable "ports" {
   type = set(number)
-  default = [22, 80, 443]
 }
 
 variable "enable_http" {
   type    = bool
-  default = false
 }
