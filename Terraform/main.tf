@@ -49,5 +49,5 @@ resource "aws_eip" "dev_eip_ec2" {
     }
   )
   domain   = "vpc"
-  instance = aws_instance.dev_app_ec2.id
+  instance = aws_instance.dev_app_ec2[count.index].id
 }
