@@ -4,11 +4,9 @@ variable "tags" {
 
 variable "region" {
   type = string
-}
-
+} 
 variable "instance_type" {
-  type        = string
-  description = "EC2 instance type for the web server"
+    type = list(string)
 }
 
 variable "allowed_ip" {
