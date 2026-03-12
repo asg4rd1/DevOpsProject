@@ -3,7 +3,7 @@ data "aws_ami" "app_ami" {
   owners      = ["amazon"]
 
   filter {
-    name   = "name" # Debe ser literalmente "name"
+    name   = "name" # must be literally name
     values = ["al2023-ami-2023*-x86_64"]
   }
 
