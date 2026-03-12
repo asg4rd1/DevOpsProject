@@ -8,5 +8,5 @@ crash.log
 # Terraform CLI config
 .terraformrc
 terraform.rc
-.terraform.lock.hcl
+terraform.lock.hcl
 
