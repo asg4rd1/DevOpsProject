@@ -4,7 +4,8 @@
 *.tfstate.*
 crash.log
 *.tfvars.json
-
+.terraform.lock.hcl
 # Terraform CLI config
 .terraformrc
 terraform.rc
+
