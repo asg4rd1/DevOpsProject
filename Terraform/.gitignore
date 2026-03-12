@@ -3,7 +3,6 @@
 *.tfstate
 *.tfstate.*
 crash.log
-*.tfvars
 *.tfvars.json
 
 # Terraform CLI config
