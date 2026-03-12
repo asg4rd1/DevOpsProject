@@ -2,7 +2,7 @@ variable "region" {
   type = string
 } 
 variable "instance_type" {
-    type = list(string)
+    type = map(string)
 }
 
 variable "allowed_ip" {

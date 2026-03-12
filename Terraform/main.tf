@@ -26,13 +26,13 @@ resource "aws_vpc_security_group_egress_rule" "egress"{
 }
 
 resource "aws_instance" "dev_app_ec2" {
-  count = length(var.instance_type)
-  instance_type = var.instance_type[count.index]
-  ami = "ami-0f3caa1cf4417e51b"
+  for_each = var.instance_type
+  instance_type = each.value
+  ami = data.aws_ami.app_ami.id
   tags = merge(
     local.default_tags,
     {
-      Name = "${local.name_prefix}-ec2-${count.index}"
+      Name = "${local.name_prefix}-ec2-${each.key}"
     }
   )
   vpc_security_group_ids = [aws_security_group.dev_app_sg.id]
