@@ -1,8 +1,7 @@
 locals {
-  environment = "dev"
-  name_prefix = "${local.environment}-app"
+  name_prefix = "${var.environment}-app"
   default_tags = {
-    environment = local.environment
+    environment = var.environment
     Project = "terraform-lab"
     Owner = "DanielArco"
     repository_name = "Asg4rd0"
