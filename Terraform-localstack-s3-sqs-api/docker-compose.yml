@@ -1,0 +1,25 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sqs
+      - EDGE_PORT=4566
+      - HOSTNAME_EXTERNAL=localhost
+      - AWS_DEFAULT_REGION=eu-west-1
+      - DEBUG=1
+    volumes:
+      - localstack-data:/var/lib/localstack
+
+#  api:
+#    build: ./api
+#    environment:
+#      AWS_ENDPOINT: http://localstack:4566
+#      AWS_REGION: us-east-1
+#    depends_on:
+#      - localstack
+
+volumes:
+  localstack-data:
