@@ -2,149 +2,189 @@
 
 ## 📌 Overview
 
-This project builds a fully reproducible local environment using:
+This project demonstrates a fully reproducible local DevOps environment where:
 
-- **Terraform** → Infrastructure as Code (S3 + SQS)
-- **LocalStack** → AWS services simulation
-- **Python (FastAPI)** → API to interact with S3
-- **Docker & Docker Compose** → Container orchestration
-- **GitHub Actions** → CI pipeline for Terraform validation
+- Infrastructure is defined using **Terraform**
+- AWS services (**S3 + SQS**) are simulated using **LocalStack**
+- A **FastAPI application** interacts with S3
+- Everything can run locally using **Docker Compose**
+- Infrastructure is validated automatically using **GitHub Actions**
 
 ---
 
-## 🏗️ Infrastructure
+## 🧠 Architecture
 
-The following resources are created using Terraform:
+Flow:
 
-- 1 **S3 bucket**
-- 1 **SQS queue**
-- **S3 → SQS notification** when an object is uploaded
+1. File or JSON is uploaded to **S3**
+2. S3 triggers a notification
+3. A message is sent to **SQS**
+4. The API can list objects stored in S3
 
 ---
 
 ## ⚙️ Requirements
 
-Make sure you have installed:
-
 - Docker
 - Docker Compose
 - Terraform
-- AWS CLI (optional but recommended)
 - Python 3.10+
+- AWS CLI (optional)
 
 ---
 
-## 🚀 1. Start LocalStack
+# 🚀 Quick Start (Recommended)
 
-Run:
+## 1. Start LocalStack
 
+```bash
 docker run -d -p 4566:4566 localstack/localstack
+```
 
 Check:
 
+```bash
 curl http://localhost:4566/health
+```
 
 ---
 
-## 🏗️ 2. Apply Terraform
+## 2. Deploy Infrastructure
 
+```bash
 cd Terraform
 
 terraform init
-
-terraform plan
-
 terraform apply -auto-approve
+```
 
 ---
 
-## 📦 3. Verify Infrastructure (Optional)
+## 3. Run API
 
-aws --endpoint-url=http://localhost:4566 s3 ls
-
-aws --endpoint-url=http://localhost:4566 sqs list-queues
-
----
-
-## 🐍 4. Run the Application
-
+```bash
 cd ../api
 
 pip install -r requirements.txt
-
 python -m uvicorn app:app --reload
+```
 
 API available at:
 
-http://127.0.0.1:8000
+```
+http://127.0.0.1:8000/docs
+```
 
 ---
 
-## 📡 5. API Endpoints
+## 4. Test Full Flow (IMPORTANT)
 
-GET /files  
-→ Lists objects in S3 (or returns message if empty)
+### Upload file to S3
 
-POST /upload  
-→ Upload JSON to S3
+```bash
+touch fichero.txt
 
-Example JSON:
+aws --endpoint-url=http://localhost:4566 \
+  s3 cp fichero.txt s3://my-s3-object-uploads/
+```
 
+---
+
+### Read SQS messages
+
+```bash
+aws --endpoint-url=http://localhost:4566 \
+  --region eu-west-1 \
+  sqs receive-message \
+  --queue-url http://sqs.eu-west-1.localhost.localstack.cloud:4566/000000000000/my-sqs-object-uploads
+```
+
+---
+
+## 📡 API Endpoints
+
+### GET /files
+
+Lists objects in S3
+
+- Returns objects if present
+- Returns message if bucket is empty
+
+---
+
+### POST /upload
+
+Uploads JSON data to S3
+
+Example:
+
+```json
 {
   "name": "test",
   "value": 123
 }
+```
+
+---
+# 🧹 Clean Environment (Recommended before Docker Compose)
+
+Stop and remove previous containers:
+
+```bash
+docker-compose down -v
+```
+
+(Optional) Remove any running LocalStack containers:
+
+```bash
+docker rm -f $(docker ps -aq --filter "ancestor=localstack/localstack")
+```
 
 ---
 
-## 🔁 6. Test S3 → SQS Flow
+# 🐳 Run with Docker Compose (Recommended alternative)
 
-aws --endpoint-url=http://localhost:4566 s3 cp fichero.txt s3://my-s3-object-uploads/
-
-aws --endpoint-url=http://localhost:4566 --region eu-west-1 sqs receive-message --queue-url http://sqs.eu-west-1.localhost.localstack.cloud:4566/000000000000/my-sqs-object-uploads
-
----
-
-## 🐳 7. Run with Docker Compose
-
+```bash
 docker-compose up --build
+```
 
-This starts:
+This will start:
+
 - LocalStack
 - API container
 
 ---
 
-## 🧹 8. Destroy Infrastructure
+# 🧹 Destroy Infrastructure
 
-cd terraform
-
+```bash
+cd Terraform
 terraform destroy -auto-approve
+```
 
 ---
 
-## 🔄 CI/CD
+# 🔄 CI/CD
 
-A GitHub Actions workflow is included that:
+A GitHub Actions pipeline is included to validate infrastructure:
 
-- Starts LocalStack
-- Runs terraform init
-- Runs terraform fmt -check
-- Runs terraform validate
-- Runs terraform plan
+- terraform init
+- terraform fmt -check
+- terraform validate
+- terraform plan
 
-This ensures infrastructure is always validated on every push.
-
----
-
-## 🧠 Notes
-
-- LocalStack simulates AWS locally (no real AWS resources are used)
-- Terraform plan is used in CI to avoid real deployments
-- The project is fully reproducible and isolated
+LocalStack is used to simulate AWS during CI execution.
 
 ---
 
-## 👨‍💻 Author
+# 🧠 Notes
+
+- No real AWS resources are used
+- Terraform `plan` is used instead of `apply` in CI
+- The system is fully local and reproducible
+
+---
+
+# 👨‍💻 Author
 
 Daniel Arco
