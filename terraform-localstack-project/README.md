@@ -1,6 +1,6 @@
-# DevOps Technical Assessment - LocalStack + Terraform + Python API
+# DevOps Technical Assessment - LocalStack + Terraform + Python API + Github Actions
 
-## 📌 Overview
+## Overview
 
 This project demonstrates a fully reproducible local DevOps environment where:
 
@@ -12,7 +12,7 @@ This project demonstrates a fully reproducible local DevOps environment where:
 
 ---
 
-## 🧠 Architecture
+## Architecture
 
 Flow:
 
@@ -23,7 +23,7 @@ Flow:
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
 - Docker
 - Docker Compose
@@ -33,7 +33,7 @@ Flow:
 
 ---
 
-# 🚀 Quick Start (Recommended)
+# Quick Start (Recommended)
 
 ## 1. Start LocalStack
 
@@ -126,7 +126,7 @@ Example:
 ```
 
 ---
-# 🧹 Clean Environment (Recommended before Docker Compose)
+# Clean Environment (Recommended before Docker Compose)
 
 Stop and remove previous containers:
 
@@ -142,7 +142,7 @@ docker rm -f $(docker ps -aq --filter "ancestor=localstack/localstack")
 
 ---
 
-# 🐳 Run with Docker Compose (Recommended alternative)
+# Run with Docker Compose (Recommended alternative)
 
 ```bash
 docker-compose up --build
@@ -155,7 +155,7 @@ This will start:
 
 ---
 
-# 🧹 Destroy Infrastructure
+# Destroy Infrastructure
 
 ```bash
 cd Terraform
@@ -164,7 +164,7 @@ terraform destroy -auto-approve
 
 ---
 
-# 🔄 CI/CD
+# CI/CD
 
 A GitHub Actions pipeline is included to validate infrastructure:
 
@@ -177,7 +177,7 @@ LocalStack is used to simulate AWS during CI execution.
 
 ---
 
-# 🧠 Notes
+# Notes
 
 - No real AWS resources are used
 - Terraform `plan` is used instead of `apply` in CI
@@ -185,6 +185,6 @@ LocalStack is used to simulate AWS during CI execution.
 
 ---
 
-# 👨‍💻 Author
+# Author
 
 Daniel Arco
