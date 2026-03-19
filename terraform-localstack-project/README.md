@@ -38,6 +38,7 @@ Flow:
 ## 1. Start LocalStack
 
 ```bash
+cd api/
 docker run -d -p 4566:4566 localstack/localstack
 ```
 
@@ -52,7 +53,7 @@ curl http://localhost:4566/health
 ## 2. Deploy Infrastructure
 
 ```bash
-cd Terraform
+cd ../Terraform
 
 terraform init
 terraform apply -auto-approve
@@ -131,6 +132,7 @@ Example:
 Stop and remove previous containers:
 
 ```bash
+cd ../api/
 docker-compose down -v
 ```
 
@@ -145,6 +147,7 @@ docker rm -f $(docker ps -aq --filter "ancestor=localstack/localstack")
 # Run with Docker Compose (Recommended alternative)
 
 ```bash
+cd ..
 docker-compose up --build
 ```
 
