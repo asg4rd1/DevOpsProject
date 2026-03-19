@@ -102,7 +102,7 @@ aws --endpoint-url=http://localhost:4566 \
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### GET /files
 
