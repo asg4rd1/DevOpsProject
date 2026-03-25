@@ -13,12 +13,12 @@ public_subnets = {
 }
 
 private_subnets = {
-  public_1 = {
-    cidr = "192.168.1.0/24"
+  private_1 = {
+    cidr = "10.0.11.0/24"
     az   = "us-east-1a"
   }
-  public_2 = {
-    cidr = "192.168.7.0/24"
+  private_2 = {
+    cidr = "10.0.12.0/24"
     az   = "us-east-1b"
   }
 }

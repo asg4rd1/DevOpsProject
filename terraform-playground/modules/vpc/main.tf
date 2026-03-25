@@ -50,13 +50,13 @@ resource "aws_eip" "nat_eip" {
       Name = "${local.name_prefix}-nat-eip"
     }
   )
-  depends_on = [aws_internet_gateway. ]
+  depends_on = [aws_internet_gateway.app_dev_internet_gateway]
 }
 
 
 resource "aws_nat_gateway" "nat_gateway_dev" {
   allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public_subnet["public-1"].id
+  subnet_id = aws_subnet.public_subnet["public_1"].id
 
   tags = merge(
     local.default_tags,
@@ -82,7 +82,7 @@ resource "aws_route_table" "private_route_table" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat_gateway_dev.id
+    nat_gateway_id = aws_nat_gateway.nat_gateway_dev.id
   }
   tags = merge(
   local.default_tags,
