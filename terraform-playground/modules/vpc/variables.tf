@@ -13,6 +13,13 @@ variable "public_subnets" {
   }))
 }
 
+variable "private_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+}
+
 variable "vpc_cidr" {
   type = string
 }

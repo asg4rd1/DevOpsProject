@@ -11,3 +11,14 @@ public_subnets = {
     az   = "us-east-1b"
   }
 }
+
+private_subnets = {
+  public_1 = {
+    cidr = "192.168.1.0/24"
+    az   = "us-east-1a"
+  }
+  public_2 = {
+    cidr = "192.168.7.0/24"
+    az   = "us-east-1b"
+  }
+}
