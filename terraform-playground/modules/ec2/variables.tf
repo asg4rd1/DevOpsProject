@@ -1,16 +1,13 @@
 variable "region" {
   type = string
-} 
+}
 
 variable "environment" {
   type = string
 }
-variable "instance_type" {
-    type = map(string)
-}
 
 variable "allowed_ip" {
-  type    = string
+  type = string
 }
 
 variable "ports" {
@@ -18,5 +15,21 @@ variable "ports" {
 }
 
 variable "enable_http" {
-  type    = bool
+  type = bool
+}
+
+variable "instance_type" {
+  type = map(string)
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "public_subnet_ids" {
+  type = map(string)
+}
+
+variable "private_subnet_ids" {
+  type = map(string)
 }

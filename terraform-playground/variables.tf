@@ -1,16 +1,13 @@
 variable "region" {
   type = string
-} 
+}
 
 variable "environment" {
   type = string
 }
-variable "instance_type" {
-    type = map(string)
-}
 
 variable "allowed_ip" {
-  type    = string
+  type = string
 }
 
 variable "ports" {
@@ -18,5 +15,27 @@ variable "ports" {
 }
 
 variable "enable_http" {
-  type    = bool
+  type = bool
+}
+
+variable "instance_type" {
+  type = map(string)
+}
+
+variable "public_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+}
+
+variable "private_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+}
+
+variable "vpc_cidr" {
+  type = string
 }
